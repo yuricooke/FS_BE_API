@@ -6,7 +6,7 @@ from schemas.user import UserSchema, UserBuscaSchema, UserViewSchema, \
                             ListagemUsersSchema, UserDelSchema, apresenta_user, \
                             apresenta_users
 
-from schemas.favorite import FavoriteSchema, FavoriteBaseSchema, FavoriteViewSchema, \
+from schemas.favorite import FavoriteSchema, FavoriteViewSchema, \
                             FavoriteListSchema
 
 from schemas.error import ErrorSchema

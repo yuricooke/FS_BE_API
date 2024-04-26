@@ -22,6 +22,10 @@ def load_hikes_data_to_db():
     # Create a new session
     session = Session()
 
+    if session.query(Hike).count() > 0:
+        # Data has already been loaded, so return early
+        return
+
     # Iterate over hikes data and add each to the session
     for hike in hikes_data:
         hike_obj = Hike(
@@ -311,9 +315,9 @@ def del_user(query: UserBuscaSchema):
           responses={"200": {"description": "A trilha foi adicionada aos favoritos com sucesso"},
                      "409": {"description": "Conflito de dados"},
                      "400": {"description": "Requisição inválida"}})
-def add_favorite(form: FavoriteBaseSchema):
+def add_favorite(form: FavoriteSchema):
     try:
-        add_favorite(form.user_id, form.hike_id)
+        add_favorite(FavoriteSchema)
         return {"message": "Trilha adicionada aos favoritos com sucesso"}, 200
     except IntegrityError:
         return {"message": "Essa trilha já está nos favoritos"}, 409
@@ -322,12 +326,12 @@ def add_favorite(form: FavoriteBaseSchema):
 
 
 
-@app.get('/favorites/<int:user_id>', tags=[favorite_tag],
+@app.get('/favorite', tags=[favorite_tag],
          responses={"200": {"description": "Lista das trilhas favoritas do usuário"},
                     "404": {"description": "Usuário não encontrado"}})
-def get_favorites(user_id: int):
+def get_favorites(form:FavoriteViewSchema):
     session = Session()
-    user = session.query(User).get(user_id)
+    user = session.query(Favorite).get(user.user_id)
     if user is None:
         return {"message": "Usuário não encontrado"}, 404
 

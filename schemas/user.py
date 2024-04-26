@@ -29,6 +29,7 @@ def apresenta_users(users: List[User]):
     result = []
     for user in users:
         result.append({
+            "id": user.id,
             "nome": user.nome,
             "email": user.email
 
